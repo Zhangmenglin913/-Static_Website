@@ -1,0 +1,61 @@
+{
+  "en-us": [
+    {
+      "filename": "demo1.md",
+      "link": "\\en-us\\docs\\demo1.html",
+      "meta": {}
+    },
+    {
+      "filename": "demo2.md",
+      "link": "\\en-us\\docs\\demo2.html",
+      "meta": {}
+    },
+    {
+      "filename": "demo3.md",
+      "link": "\\en-us\\docs\\dir\\demo3.html",
+      "meta": {}
+    }
+  ],
+  "zh-cn": [
+    {
+      "filename": "demo1.md",
+      "link": "\\zh-cn\\docs\\demo1.html",
+      "meta": {}
+    },
+    {
+      "filename": "demo3.md",
+      "link": "\\zh-cn\\docs\\dir\\demo3.html",
+      "meta": {}
+    },
+    {
+      "filename": "docker安装.md",
+      "link": "\\zh-cn\\docs\\docker安装.html",
+      "meta": {}
+    },
+    {
+      "filename": "idp单机安装文档-v1.0.md",
+      "link": "\\zh-cn\\docs\\idp单机安装文档-v1.0.html",
+      "meta": {}
+    },
+    {
+      "filename": "jdk安装.md",
+      "link": "\\zh-cn\\docs\\jdk安装.html",
+      "meta": {}
+    },
+    {
+      "filename": "mysql安装.md",
+      "link": "\\zh-cn\\docs\\mysql安装.html",
+      "meta": {}
+    },
+    {
+      "filename": "nginx安装.md",
+      "link": "\\zh-cn\\docs\\nginx安装.html",
+      "meta": {}
+    },
+    {
+      "filename": "zookeeper安装.md",
+      "link": "\\zh-cn\\docs\\zookeeper安装.html",
+      "meta": {}
+    }
+  ]
+}

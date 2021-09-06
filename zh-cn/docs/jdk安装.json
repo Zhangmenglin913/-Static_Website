@@ -1,0 +1,6 @@
+{
+  "filename": "jdk安装.md",
+  "__html": "<h4 id=\"oracle-jdk-1.8.0\">oracle jdk 1.8.0 <a class=\"header-anchor\" href=\"#oracle-jdk-1.8.0\">#</a></h4>\n<p>下载和安装</p>\n<pre><code class=\"language-bash\"><span class=\"hljs-comment\"># 下载jdk</span>\n<span class=\"hljs-comment\"># 创建目录</span>\nmkdir -p /usr/java\ntar xvf jdk-8u281-linux-x64.tar\n</code></pre>\n<p>配置环境变量</p>\n<pre><code class=\"language-bash\"><span class=\"hljs-comment\">#打开 /etc/profile 文件，在末尾添加下面内容</span>\n<span class=\"hljs-built_in\">export</span> JAVA_HOME=/usr/java/jdk1.8.0_281\n<span class=\"hljs-built_in\">export</span> CLASSPATH=.:<span class=\"hljs-variable\">$JAVA_HOME</span>/lib/dt.jar:<span class=\"hljs-variable\">$JAVA_HOME</span>/lib/tools.jar\n<span class=\"hljs-built_in\">export</span> PATH=<span class=\"hljs-variable\">$PATH</span>:<span class=\"hljs-variable\">$JAVA_HOME</span>/bin\n</code></pre>\n<p>保存并运行</p>\n<pre><code class=\"language-bash\"><span class=\"hljs-built_in\">source</span> /etc/profile\n\n<span class=\"hljs-comment\">#测试一下</span>\njava -version\n</code></pre>\n",
+  "link": "\\zh-cn\\docs\\jdk安装.html",
+  "meta": {}
+}

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="idp_single_install-v1.0" />
+	<meta name="description" content="idp_single_install-v1.0" />
+	<!-- 网页标签标题 -->
+	<title>idp_single_install-v1.0</title>
+	<link rel="shortcut icon" href="/img/docsite.ico"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/dubbo_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/system/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html" target="_self">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/docs/demo1.html" target="_self">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/index.html" target="_self">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html" target="_self">社区</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/system/docs.png" class="front-img"/><span>文档</span><img src="/img/system/docs.png" class="back-img"/></div></div><section class="content-section"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>安装文档</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/demo1.html" target="_self">IDP安装文档</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/demo2.html" target="_self">示例2</a></li><li style="height:72px;overflow:hidden" class="menu-item menu-item-level-2"><span>目录<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/system/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/dir/demo3.html" target="_self">示例3</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body"><h1 id="idp%E5%AE%89%E8%A3%85%E6%96%87%E6%A1%A3">idp安装文档 <a class="header-anchor" href="#idp%E5%AE%89%E8%A3%85%E6%96%87%E6%A1%A3">#</a></h1>
+<h2 id="1.%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87">1.环境准备 <a class="header-anchor" href="#1.%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87">#</a></h2>
+<hr>
+<h3 id="1.1.-%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83">1.1. 安装环境 <a class="header-anchor" href="#1.1.-%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83">#</a></h3>
+<p><a href="https://blog.csdn.net/u011331844/article/details/103759064">https://blog.csdn.net/u011331844/article/details/103759064</a></p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CentOS</td>
+<td>7.6</td>
+</tr>
+<tr>
+<td>MySql</td>
+<td>5.7.25(MySQL Community Server)</td>
+</tr>
+<tr>
+<td>CDH</td>
+<td>6.3.2或更高</td>
+</tr>
+<tr>
+<td>Hive</td>
+<td>2.1.1</td>
+</tr>
+<tr>
+<td>Zookeeper</td>
+<td>3.4.5</td>
+</tr>
+<tr>
+<td>Spark</td>
+<td>2.4.0</td>
+</tr>
+<tr>
+<td>Impala</td>
+<td>3.2.0</td>
+</tr>
+<tr>
+<td>Kafka</td>
+<td>2.2.1</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>2.1.4</td>
+</tr>
+<tr>
+<td>Apache Sqoop</td>
+<td>1.4.7</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1.2-%E5%AE%89%E8%A3%85%E7%9A%84%E7%9B%B8%E5%85%B3%E7%BA%A6%E5%AE%9A">1.2 安装的相关约定 <a class="header-anchor" href="#1.2-%E5%AE%89%E8%A3%85%E7%9A%84%E7%9B%B8%E5%85%B3%E7%BA%A6%E5%AE%9A">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>用户/目录类型</th>
+<th>用户名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>部署用户</td>
+<td>idp</td>
+<td>linux系统用户,启动Java服务的用户</td>
+</tr>
+<tr>
+<td>安装目录</td>
+<td>/opt/idp/</td>
+<td>子目录backend和frontend，分别是后端和前端部署路径</td>
+</tr>
+<tr>
+<td>租户</td>
+<td>idp</td>
+<td>worker里执行shell脚本时的执行用户</td>
+</tr>
+<tr>
+<td>mysql用户</td>
+<td>idp_8011_sa</td>
+<td></td>
+</tr>
+<tr>
+<td>mysql数据库</td>
+<td>idp_demo_8011</td>
+<td></td>
+</tr>
+<tr>
+<td>hdfs用户</td>
+<td>idp</td>
+<td></td>
+</tr>
+<tr>
+<td>hdfs目录</td>
+<td>/user/idp</td>
+<td></td>
+</tr>
+<tr>
+<td>kerberos ipa用户</td>
+<td>idp</td>
+<td></td>
+</tr>
+<tr>
+<td>kerberos ipa用户</td>
+<td>octopus</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="1.3.jdk%E5%AE%89%E8%A3%85">1.3.Jdk安装 <a class="header-anchor" href="#1.3.jdk%E5%AE%89%E8%A3%85">#</a></h3>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">上传本地文件到服务器</span>
+<span class="hljs-meta">#</span><span class="bash">如果本机是windows系统打开CMD执行上传语句</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> scp D:\jdk-8u281.tar.gz root@10.24.96.73:/root/</span>
+<span class="hljs-meta">#</span><span class="bash">登录远程服务器</span>
+<span class="hljs-meta">#</span><span class="bash">解压缩安装包</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> tar -zxvf jdk-8u181-linux-x64.tar.gz</span>
+<span class="hljs-meta">
+#</span><span class="bash">移动压缩文件</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> mv jdk1.8.0_301/ /usr/java/</span>
+</code></pre>
+<p>配置环境变量</p>
+<pre><code class="language-shell"><span class="hljs-meta">&gt;</span><span class="bash"> vi /etc/profile</span>
+<span class="hljs-meta">
+#</span><span class="bash"><span class="hljs-comment">#把以下语句放到环境变量中 </span></span>
+<span class="hljs-meta">#</span><span class="bash"><span class="hljs-built_in">set</span> java environment</span>
+JAVA_HOME=/usr/java/ 
+JRE_HOME=/usr/java/jre     
+CLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
+PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+export JAVA_HOME JRE_HOME CLASS_PATH PATH
+</code></pre>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">执行</span>
+按ESC按键输入:wq!
+<span class="hljs-meta">#</span><span class="bash">修改生效</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> <span class="hljs-built_in">source</span> /etc/profile</span>
+<span class="hljs-meta">#</span><span class="bash">测试JDK</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> java –version</span>
+</code></pre>
+<p><font color='orange'>安装成功如下图</font></p>
+<p><img src="C:%5CUsers%5Czhang%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210803111024068.png" alt="image-20210803111024068"></p>
+<h2 id="2.idp%E7%B3%BB%E7%BB%9F%E9%83%A8%E7%BD%B2">2.idp系统部署 <a class="header-anchor" href="#2.idp%E7%B3%BB%E7%BB%9F%E9%83%A8%E7%BD%B2">#</a></h2>
+<h3 id="2.1-%E9%83%A8%E7%BD%B2%E7%94%A8%E6%88%B7">2.1 部署用户 <a class="header-anchor" href="#2.1-%E9%83%A8%E7%BD%B2%E7%94%A8%E6%88%B7">#</a></h3>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash"> 添加部署用户idp</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> useradd idp</span>
+<span class="hljs-meta">#</span><span class="bash"> 为idp用户设置密码 Os@QazXsw</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> passwd idp</span>
+</code></pre>
+<h3 id="2.2-ssh%E4%BA%92%E4%BF%A1">2.2 ssh互信 <a class="header-anchor" href="#2.2-ssh%E4%BA%92%E4%BF%A1">#</a></h3>
+<p>部署用户需要在部署机器和其他安装机器上配置ssh免密登录，如果要在部署机上安装调度，需要配置本机免密登录</p>
+<ul>
+<li>
+<p>将 <strong>主机器</strong> 和各个其它机器SSH免密打通</p>
+<pre><code class="language-shell"><span class="hljs-meta">&gt;</span><span class="bash"> su - idp  <span class="hljs-comment">#切换到部署用户idp</span></span>
+<span class="hljs-meta">&gt;</span><span class="bash"> ssh-keygen -t rsa <span class="hljs-comment">#一直回车，会在用户的/home目录下生成.ssh</span></span>
+<span class="hljs-meta">&gt;</span><span class="bash"> ssh-copy-id idp@localhost <span class="hljs-comment">#更换@后面的localhost，就可以完成指定用户到对应节点的免密登录，本机免密也一样</span></span>
+</code></pre>
+</li>
+</ul>
+<h3 id="2.3%E9%83%A8%E7%BD%B2%E8%B7%AF%E5%BE%84">2.3部署路径 <a class="header-anchor" href="#2.3%E9%83%A8%E7%BD%B2%E8%B7%AF%E5%BE%84">#</a></h3>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">登录root账户</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> su - root </span>
+<span class="hljs-meta">#</span><span class="bash"> 为账户添加安装目录的创建权限</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> chown -R idp /opt/</span>
+<span class="hljs-meta">#</span><span class="bash"> 为租户添加安装目录的访问权限</span>
+<span class="hljs-meta">#</span><span class="bash">usermod -aG octopus idp</span>
+<span class="hljs-meta">#</span><span class="bash">chmod g+rwx /home/octopus/</span>
+</code></pre>
+<pre><code class="language-bash"><span class="hljs-comment">#在所有需要部署调度的机器上创建部署用户，因为worker服务是以 sudo -u {linux-user} 方式来执行作业，所以部署用户需要有 sudo 权限，而且是免密的。</span>
+&gt; vi /etc/sudoers
+
+<span class="hljs-comment"># 租户idp账号写入</span>
+<span class="hljs-comment">## Allow root to run any commands anywhere</span>
+root    ALL=(ALL)       ALL
+idp  ALL=(ALL)       NOPASSWD: ALL
+
+<span class="hljs-comment"># 并且需要注释掉 Default requiretty 一行</span>
+<span class="hljs-comment">#Default requiretty</span>
+</code></pre>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash"> 创建安装目录</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> su - idp </span>
+<span class="hljs-meta">&gt;</span><span class="bash"> mkdir -p /opt/idp/backend</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> mkdir -p /opt/idp/frontend/</span>
+<span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">#上传系统后端及前端安装压缩包到服务器</span></span>
+<span class="hljs-meta">#</span><span class="bash">如果本机是windows系统打开CMD执行上传语句</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> scp D:\idp-1.4.0-release-bin.tar idp@10.24.96.73:/home/idp</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> scp D:\dist_8033.gz idp@10.24.96.73:/home/idp</span>
+<span class="hljs-meta">#</span><span class="bash">将系统文件解压</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> tar -zvxf idp-1.5.0-release-bin.tar.gz </span>
+<span class="hljs-meta">&gt;</span><span class="bash"> unzip dist-1.4.0.zip</span>
+<span class="hljs-meta">#</span><span class="bash">移动文件夹至指定目录</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> mv dist /opt/idp/frontend/</span>
+</code></pre>
+<h3 id="2.4-%E7%94%9F%E6%88%90keytab">2.4 生成keytab <a class="header-anchor" href="#2.4-%E7%94%9F%E6%88%90keytab">#</a></h3>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash"> 需要admin进行操作</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> ipa user-add idp <span class="hljs-comment"># 新增用户</span></span>
+<span class="hljs-meta">&gt;</span><span class="bash"> ipa user-mod idp --password <span class="hljs-comment"># 修改密码</span></span>
+<span class="hljs-meta">&gt;</span><span class="bash"> kinit idp <span class="hljs-comment"># 新增用户必须先登录并根据提示修改一次密码，密码可以原先的相同（密码：Os@QazXsw）</span></span>
+<span class="hljs-meta">&gt;</span><span class="bash"> ipa-getkeytab -s ipa.ruisdata.com -p idp@RUISDATA.COM -k /home/idp/idp.keytab -P </span>
+<span class="hljs-meta">#</span><span class="bash"> 请注意此时freeipa会自动给该用户重置密码，因此使用kinit用户名然后输入密码的方式无法登录。</span>
+<span class="hljs-meta">#</span><span class="bash">如果希望仍然可以使用密码认证，可以加入-P参数指定密码</span>
+</code></pre>
+<ul>
+<li>
+<p><strong>生成的keytab权限要与租户对应， 例如使用idp租户， 则idp需要有keytab的权限</strong></p>
+</li>
+<li>
+<p>对于多租户的情况，按需放开keytab的权限到644</p>
+</li>
+<li>
+<p>将多个租户合并到一个keytab中：</p>
+</li>
+</ul>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash"> 不同租户同样指定相同的keytab文件</span>
+<span class="hljs-meta">#</span><span class="bash"> 设置密码时， 改成与原先的一致即可 ()</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> ipa-getkeytab -s you.kdc.server.com -p octopus_2@REALMS.COM -k &lt;path/xx.keytab&gt; -P </span>
+</code></pre>
+<h3 id="2.5-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%9D%E5%A7%8B%E5%8C%96">2.5 数据库初始化 <a class="header-anchor" href="#2.5-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%9D%E5%A7%8B%E5%8C%96">#</a></h3>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">远程到docker服务器</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> ssh root@10.24.69.9</span>
+<span class="hljs-meta">#</span><span class="bash">登录docker上的MySql</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> docker <span class="hljs-built_in">exec</span> -it mysql5.7 bash </span>
+<span class="hljs-meta">#</span><span class="bash">登录mysql root 账户</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> mysql -u root -p</span>
+<span class="hljs-meta">#</span><span class="bash">输入密码</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> 123456</span>
+</code></pre>
+<h4 id="2.5.1%E5%88%9B%E5%BB%BAdatabase%E3%80%81user%E5%B9%B6%E8%B5%8B%E6%9D%83%E6%89%A7%E8%A1%8C%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BAdatabase%E5%92%8C%E8%B4%A6%E5%8F%B7">2.5.1创建database、user并赋权执行以下命令创建database和账号 <a class="header-anchor" href="#2.5.1%E5%88%9B%E5%BB%BAdatabase%E3%80%81user%E5%B9%B6%E8%B5%8B%E6%9D%83%E6%89%A7%E8%A1%8C%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BAdatabase%E5%92%8C%E8%B4%A6%E5%8F%B7">#</a></h4>
+<pre><code class="language-sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">DATABASE</span> idp_demo_8011 <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CHARACTER</span> <span class="hljs-keyword">SET</span> utf8 <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">COLLATE</span> utf8_general_ci;
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">USER</span> <span class="hljs-string">'idp_8011_sa'</span>@<span class="hljs-string">'%'</span> <span class="hljs-keyword">IDENTIFIED</span> <span class="hljs-keyword">BY</span> <span class="hljs-string">'Os@123456'</span>;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">PRIVILEGES</span> <span class="hljs-keyword">ON</span> idp_demo_8011.* <span class="hljs-keyword">TO</span> <span class="hljs-string">'idp_8011_sa'</span>@<span class="hljs-string">'%'</span> <span class="hljs-keyword">IDENTIFIED</span> <span class="hljs-keyword">BY</span> <span class="hljs-string">'Os@123456'</span>;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">PRIVILEGES</span> <span class="hljs-keyword">ON</span> idp_demo_8011.* <span class="hljs-keyword">TO</span> <span class="hljs-string">'idp_8011_sa'</span>@<span class="hljs-string">'localhost'</span> <span class="hljs-keyword">IDENTIFIED</span> <span class="hljs-keyword">BY</span> <span class="hljs-string">'Os@123456'</span>;
+<span class="hljs-keyword">flush</span> <span class="hljs-keyword">privileges</span>;
+
+</code></pre>
+<h4 id="2.5.2%E5%88%9B%E5%BB%BA%E8%A1%A8%E5%92%8C%E5%AF%BC%E5%85%A5%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE">2.5.2创建表和导入基础数据 <a class="header-anchor" href="#2.5.2%E5%88%9B%E5%BB%BA%E8%A1%A8%E5%92%8C%E5%AF%BC%E5%85%A5%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE">#</a></h4>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">返回系统安装服务器</span>
+<span class="hljs-meta">#</span><span class="bash">登录idp账户</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> su - idp</span>
+<span class="hljs-meta">#</span><span class="bash">进入系统文件</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> <span class="hljs-built_in">cd</span> /home/idp/idp-1.4.0-release</span>
+</code></pre>
+<pre><code class="language-properties"><span class="hljs-comment">#修改./conf/application.properties中的下列属性</span>
+<span class="hljs-meta">spring.datasource.url</span>=<span class="hljs-string">jdbc:mysql://10.24.69.9:3306/idp_demo_8011?characterEncoding=UTF-8</span>
+<span class="hljs-meta">spring.datasource.username</span>=<span class="hljs-string">idp_8011_sa</span>
+<span class="hljs-meta">spring.datasource.password</span>=<span class="hljs-string">Os@123456</span>
+
+</code></pre>
+<h4 id="2.5.3%E6%89%A7%E8%A1%8C%E5%88%9B%E5%BB%BA%E8%A1%A8%E5%92%8C%E5%AF%BC%E5%85%A5%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E8%84%9A%E6%9C%AC">2.5.3执行创建表和导入基础数据脚本 <a class="header-anchor" href="#2.5.3%E6%89%A7%E8%A1%8C%E5%88%9B%E5%BB%BA%E8%A1%A8%E5%92%8C%E5%AF%BC%E5%85%A5%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E8%84%9A%E6%9C%AC">#</a></h4>
+<pre><code class="language-shell"><span class="hljs-meta">&gt;</span><span class="bash"> sh ./script/create-octopusscheduler.sh</span>
+</code></pre>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">手动更新</span>
+<span class="hljs-meta">#</span><span class="bash">导入sql脚本</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> scp ./sql/dolphinscheduler_mysql.sql root@10.24.</span>
+69.9:/root/
+<span class="hljs-meta">#</span><span class="bash">登录数据库服务器</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> ssh root@10.24.69.9</span>
+<span class="hljs-meta">#</span><span class="bash">拷贝脚本到mysql根目录</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> docker cp dolphinscheduler_mysql.sql  mysql5.7:.</span>
+<span class="hljs-meta">#</span><span class="bash">登录docker上的MySql</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> docker <span class="hljs-built_in">exec</span> -it mysql5.7 bash </span>
+<span class="hljs-meta">#</span><span class="bash">登录mysql idp_8011_sa 账户</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> mysql -u idp_8011_sa -p</span>
+<span class="hljs-meta">#</span><span class="bash">输入密码</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> Os@123456</span>
+<span class="hljs-meta">#</span><span class="bash">执行sql脚本</span>
+<span class="hljs-meta">mysql&gt;</span><span class="bash"> use idp_demozml_8011</span>
+<span class="hljs-meta">mysql&gt;</span><span class="bash"> <span class="hljs-built_in">source</span> dolphinscheduler_mysql.sql</span>
+</code></pre>
+<h3 id="2.6%E5%90%8E%E7%AB%AF%E9%85%8D%E7%BD%AE">2.6后端配置 <a class="header-anchor" href="#2.6%E5%90%8E%E7%AB%AF%E9%85%8D%E7%BD%AE">#</a></h3>
+<h4 id="2.6.1%E4%BF%AE%E6%94%B9install_config.conf%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">2.6.1修改install_config.conf配置文件 <a class="header-anchor" href="#2.6.1%E4%BF%AE%E6%94%B9install_config.conf%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">#</a></h4>
+<pre><code class="language-shell"><span class="hljs-meta">&gt;</span><span class="bash">vi /home/idp/idp-1.4.0-release/conf/config/install_config.conf <span class="hljs-comment">#根据解压后的路径</span></span>
+</code></pre>
+<pre><code class="language-properties"><span class="hljs-comment">#根据实际ip修改下面的配置</span>
+<span class="hljs-attr">installPath</span>=<span class="hljs-string">/opt/idp/backend</span>
+<span class="hljs-attr">deployUser</span>=<span class="hljs-string">idp</span>
+<span class="hljs-attr">ips</span>=<span class="hljs-string">10.24.96.73</span>
+<span class="hljs-attr">sshPort</span>=<span class="hljs-string">22</span>
+<span class="hljs-attr">masters</span>=<span class="hljs-string">10.24.96.73</span>
+<span class="hljs-attr">workers</span>=<span class="hljs-string">10.24.96.73</span>
+<span class="hljs-attr">alertServer</span>=<span class="hljs-string">10.24.96.73</span>
+<span class="hljs-attr">apiServers</span>=<span class="hljs-string">10.24.96.73</span>
+<span class="hljs-attr">dataAssetsServers</span>=<span class="hljs-string">10.24.96.73</span>
+</code></pre>
+<h4 id="2.6.2%E4%BF%AE%E6%94%B9install.sh%E8%84%9A%E6%9C%AC">2.6.2修改install.sh脚本 <a class="header-anchor" href="#2.6.2%E4%BF%AE%E6%94%B9install.sh%E8%84%9A%E6%9C%AC">#</a></h4>
+<p>请参考install.sh中的注释.</p>
+<pre><code class="language-shell"><span class="hljs-meta">&gt;</span><span class="bash"> vi /home/idp/idp-1.4.0-release/install.sh <span class="hljs-comment">#根据解压后的路径</span></span>
+</code></pre>
+<pre><code class="language-properties"><span class="hljs-comment"># idp系统需要的数据库类型（默认mysql）</span>
+<span class="hljs-attr">dbtype</span>=<span class="hljs-string">"mysql"</span>
+<span class="hljs-comment">
+# mysql服务器的地址:端口</span>
+<span class="hljs-attr">dbhost</span>=<span class="hljs-string">"10.24.69.9:3306"</span>
+<span class="hljs-comment">
+# 数据库名称</span>
+<span class="hljs-attr">dbname</span>=<span class="hljs-string">"idp_demo_8011"</span>
+<span class="hljs-comment">
+# 访问数据库的用户名（需要新建一个用户，不要用root）</span>
+<span class="hljs-attr">username</span>=<span class="hljs-string">"idp_8011_sa"</span>
+<span class="hljs-comment">
+# 访问数据库用户的密码</span>
+<span class="hljs-attr">passowrd</span>=<span class="hljs-string">"Os@123456"</span>
+<span class="hljs-comment">
+# conf/config/install_config.conf config</span>
+<span class="hljs-comment"># idp系统的安装目录（默认都安装在 /opt/idp/backend )</span>
+<span class="hljs-attr">installPath</span>=<span class="hljs-string">"/opt/idp/backend"</span>
+<span class="hljs-comment">
+# deployment user</span>
+<span class="hljs-comment"># 部署用户，启动idp服务，执行任务的用户</span>
+<span class="hljs-attr">deployUser</span>=<span class="hljs-string">"idp"</span>
+<span class="hljs-comment">
+# zk cluster</span>
+<span class="hljs-comment">#zookeeper服务器地址</span>
+<span class="hljs-comment">#zkQuorum="192.168.xx.xx:2181,192.168.xx.xx:2181"</span>
+<span class="hljs-attr">zkQuorum</span>=<span class="hljs-string">"10.24.96.73:2181"</span>
+<span class="hljs-comment">
+# install hosts</span>
+<span class="hljs-comment"># 需要安装idp服务的主机ip列表</span>
+<span class="hljs-comment">#ips="ark0,ark1"</span>
+<span class="hljs-attr">ips</span>=<span class="hljs-string">"10.24.96.73"</span>
+<span class="hljs-comment">
+# ssh port, default 22</span>
+<span class="hljs-comment"># ssh的端口（默认是22）</span>
+<span class="hljs-attr">sshPort</span>=<span class="hljs-string">22</span>
+<span class="hljs-comment">
+# run master machine</span>
+<span class="hljs-comment"># 运行master服务的主机ip（至少配置一台）</span>
+<span class="hljs-comment">#masters="ark0,ark1"</span>
+<span class="hljs-attr">masters</span>=<span class="hljs-string">"10.24.96.73"</span>
+<span class="hljs-comment">
+# run worker machine</span>
+<span class="hljs-comment"># 运行worker服务的主机ip列表（一般是配置多台）</span>
+<span class="hljs-comment">#workers="ark2,ark3,ark4"</span>
+<span class="hljs-attr">workers</span>=<span class="hljs-string">"10.24.96.73"</span>
+<span class="hljs-comment"># run alert machine</span>
+<span class="hljs-comment"># 运行告警服务的主机ip（一台就够了）</span>
+<span class="hljs-comment">#alertServer="ark3"</span>
+<span class="hljs-attr">alertServer</span>=<span class="hljs-string">"10.24.96.73"</span>
+<span class="hljs-comment">
+# run api machine</span>
+<span class="hljs-comment"># api服务的主机ip（缺省一台；配置多台后，需在nginx里配置upstream）</span>
+<span class="hljs-comment">#apiServers="ark1"</span>
+<span class="hljs-attr">apiServers</span>=<span class="hljs-string">"10.24.96.73"</span>
+<span class="hljs-comment">
+# run data asset machine</span>
+<span class="hljs-comment"># 数据资产的api服务（缺省一台）</span>
+<span class="hljs-comment">#dataAssetsServers="ark1"</span>
+<span class="hljs-attr">dataAssetsServers</span>=<span class="hljs-string">"10.24.96.73"</span>
+<span class="hljs-comment">
+# alert config</span>
+<span class="hljs-comment"># 告警邮件发送的配置开始...</span>
+<span class="hljs-comment"># 告警配置， 邮件发送协议（默认 SMTP）</span>
+<span class="hljs-attr">mailProtocol</span>=<span class="hljs-string">"SMTP"</span>
+<span class="hljs-comment">
+# 邮件发送服务器</span>
+<span class="hljs-attr">mailServerHost</span>=<span class="hljs-string">"smtp.exmail.qq.com"</span>
+<span class="hljs-comment">
+# 邮件发送服务器的端口</span>
+<span class="hljs-attr">mailServerPort</span>=<span class="hljs-string">"25"</span>
+<span class="hljs-comment">
+# 邮件发送人</span>
+<span class="hljs-attr">mailSender</span>=<span class="hljs-string">"xxxxxxxxxx"</span>
+<span class="hljs-comment">
+# 邮件用户（一般和发件人相同）</span>
+<span class="hljs-attr">mailUser</span>=<span class="hljs-string">"xxxxxxxxxx"</span>
+<span class="hljs-comment">
+# 邮件用户的密码</span>
+<span class="hljs-attr">mailPassword</span>=<span class="hljs-string">"xxxxxxxxxx"</span>
+<span class="hljs-comment">
+# 是否支持StartTLS</span>
+<span class="hljs-attr">starttlsEnable</span>=<span class="hljs-string">"false"</span>
+<span class="hljs-comment">
+# ssl信任的主机列表（ 默认* ） </span>
+<span class="hljs-attr">sslTrust</span>=<span class="hljs-string">"xxxxxxxxxx"</span>
+<span class="hljs-comment">
+# SSL mail protocol support</span>
+<span class="hljs-comment"># 是否支持SSL</span>
+<span class="hljs-attr">sslEnable</span>=<span class="hljs-string">"true"</span>
+<span class="hljs-comment">
+##例子</span>
+<span class="hljs-comment">#alert.type=EMAIL</span>
+<span class="hljs-comment">#mail.protocol=SMTP</span>
+<span class="hljs-comment">#mail.server.host=stmp.163.com</span>
+<span class="hljs-comment">#mail.server.port=994</span>
+<span class="hljs-comment">#mail.sender=bigtime@163.com</span>
+<span class="hljs-comment">#mail.user=bigtime@163.com</span>
+<span class="hljs-comment">#mail.password=112233</span>
+<span class="hljs-comment">#mail.smtp.starttls.enable=false</span>
+<span class="hljs-comment">#mail.smtp.ssl.enable=true</span>
+<span class="hljs-comment">#mail.smtp.ssl.trust=*</span>
+<span class="hljs-comment">## 告警邮件发送配置结束。</span>
+<span class="hljs-comment">
+
+# if resUploadStartupType is HDFS，defaultFS write namenode address，HA you need to put core-site.xml and hdfs-site.xml in the conf directory.</span>
+<span class="hljs-comment"># if S3，write S3 address，HA，for example ：s3a://idp，</span>
+<span class="hljs-comment"># Note，s3 be sure to create the root directory /idp</span>
+<span class="hljs-comment"># 文件服务，支持hdfs和s3</span>
+<span class="hljs-comment"># hdfs的配置，需要在/etc/hadoop/hdfs-site.xml里查找。</span>
+<span class="hljs-attr">defaultFS</span>=<span class="hljs-string">"hdfs://mycluster:8020"</span>
+<span class="hljs-comment">
+# if S3 is configured, the following configuration is required.</span>
+<span class="hljs-comment"># 如果上面的配置选择是S3， 需要配置下面三行S3的配置.</span>
+<span class="hljs-attr">s3Endpoint</span>=<span class="hljs-string">"http://192.168.xx.xx:9010"</span>
+<span class="hljs-attr">s3AccessKey</span>=<span class="hljs-string">"xxxxxxxxxx"</span>
+<span class="hljs-attr">s3SecretKey</span>=<span class="hljs-string">"xxxxxxxxxx"</span>
+<span class="hljs-comment">
+# resourcemanager HA configuration, if it is a single resourcemanager, here is yarnHaIps=""</span>
+<span class="hljs-comment"># yarn集群的地址列表。 如果yarn是单机的这里要改为""</span>
+<span class="hljs-attr">yarnHaIps</span>=<span class="hljs-string">"192.168.xx.xx,192.168.xx.xx"</span>
+<span class="hljs-comment">
+# if it is a single resourcemanager, you only need to configure one host name. If it is resourcemanager HA, the default configuration is fine.</span>
+<span class="hljs-comment"># 如果yarn是单个节点的，这里需要配置yarn节点的ip。如果是多个节点这里的配置不用修改。</span>
+<span class="hljs-comment">#singleYarnIp="ark1"</span>
+<span class="hljs-comment">
+
+# hdfs root path, the owner of the root path must be the deployment user.</span>
+<span class="hljs-comment"># versions prior to 1.1.0 do not automatically create the hdfs root directory, you need to create it yourself.</span>
+<span class="hljs-comment"># idp在hdfs里使用的目录，缺省是 （/user/idp）</span>
+<span class="hljs-attr">hdfsPath</span>=<span class="hljs-string">"/user/idp"</span>
+<span class="hljs-comment">
+# have users who create directory permissions under hdfs root path /</span>
+<span class="hljs-comment"># <span class="hljs-doctag">Note:</span> if kerberos is enabled, hdfsRootUser="" can be used directly.</span>
+<span class="hljs-comment"># 系统里有kerberos开着，这里需要改成"". 如果无kerberos,需要使用有权限的用户，一般是hdfs。</span>
+<span class="hljs-attr">hdfsRootUser</span>=<span class="hljs-string">"hdfs"</span>
+<span class="hljs-comment">
+# zk config</span>
+<span class="hljs-comment"># zk root directory</span>
+<span class="hljs-attr">zkRoot</span>=<span class="hljs-string">"/idp"</span>
+</code></pre>
+<h4 id="2.6.3%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1">2.6.3安装系统服务 <a class="header-anchor" href="#2.6.3%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1">#</a></h4>
+<pre><code class="language-shell"><span class="hljs-meta"> #</span><span class="bash">修改install.sh后， 执行</span>
+<span class="hljs-meta"> &gt;</span><span class="bash"> sh install.sh</span>
+</code></pre>
+<p>2.6.4 安装licence</p>
+<pre><code class="language-shell">将文件拷贝到 /opt/idp/backend/conf/license
+</code></pre>
+<p>在安装完成后, 使用jps查看服务是否启动，在对应节点上有对应的服务， 那么就说明服务安装完成。</p>
+<p><img src="C:%5CUsers%5Czhang%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210803141344397.png" alt="image-20210803141344397"></p>
+<h4 id="2.6.4%E9%87%8D%E5%90%AF%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1">2.6.4重启系统服务 <a class="header-anchor" href="#2.6.4%E9%87%8D%E5%90%AF%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1">#</a></h4>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">使用idp账户</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> <span class="hljs-built_in">cd</span> /opt/idp/backend/bin/</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> sh stop-all.sh</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> sh start-all.sh</span>
+</code></pre>
+<h3 id="2.7%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2">2.7前端部署 <a class="header-anchor" href="#2.7%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2">#</a></h3>
+<h4 id="2.7.1%E5%AE%89%E8%A3%85nginx">2.7.1安装nginx <a class="header-anchor" href="#2.7.1%E5%AE%89%E8%A3%85nginx">#</a></h4>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash">下载安装插件</span>
+<span class="hljs-meta">&gt;</span><span class="bash">su - root <span class="hljs-comment">#登录root 账户</span></span>
+<span class="hljs-meta">&gt;</span><span class="bash"> yum install -y gcc pcre pcre-devel openssl openssl-devel gd gd-devel</span>
+<span class="hljs-meta">
+#</span><span class="bash">解压nginx安装包</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> tar -zvxf nginx-1.18.0.tar.gz</span>
+<span class="hljs-meta">#</span><span class="bash">进入解压后的nginx文件</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> <span class="hljs-built_in">cd</span> ./nginx-1.18.0</span>
+<span class="hljs-meta">#</span><span class="bash">更改安装路径</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> ./configure --prefix=/usr/<span class="hljs-built_in">local</span>/nginx</span>
+<span class="hljs-meta">#</span><span class="bash">安装</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> make &amp;&amp; make install</span>
+</code></pre>
+<h4 id="2.7.2%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">2.7.2修改配置文件 <a class="header-anchor" href="#2.7.2%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">#</a></h4>
+<pre><code class="language-shell"><span class="hljs-meta">&gt;</span><span class="bash"> vi /usr/<span class="hljs-built_in">local</span>/nginx/conf/nginx.conf</span>
+<span class="hljs-meta">#</span><span class="bash">添加以下内容</span>
+server {
+    listen       8888;# 访问端口
+    server_name  10.24.96.73;
+    client_max_body_size 1024m; #用户上传文件的最大大小，需要与后端配置文件中设置的值保持一致
+    #charset koi8-r;
+    #access_log  /var/log/nginx/host.access.log  main;
+    location / {
+        root   /opt/idp/frontend/dist; # 上面前端解压的dist目录地址(自行修改)
+        index  index.html index.html;
+    }
+    location /octopus/scheduler {
+    		# prod: 10.104.1.183:12345
+        proxy_pass http://10.24.96.73:12345; # 接口地址(自行修改)
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header x_real_ipP $remote_addr;
+        proxy_set_header remote_addr $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_http_version 1.1;
+        proxy_connect_timeout 4s;
+        proxy_read_timeout 30s;
+        proxy_send_timeout 12s;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+    #error_page  404              /404.html;
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+ }
+</code></pre>
+<h4 id="2.7.3%E5%90%AF%E5%8A%A8nginx">2.7.3启动nginx <a class="header-anchor" href="#2.7.3%E5%90%AF%E5%8A%A8nginx">#</a></h4>
+<pre><code class="language-shell"><span class="hljs-meta">&gt;</span><span class="bash"> <span class="hljs-built_in">cd</span> /usr/<span class="hljs-built_in">local</span>/nginx/sbin</span>
+<span class="hljs-meta">&gt;</span><span class="bash"> ./nginx</span>
+</code></pre>
+<pre><code class="language-properties"><span class="hljs-attr">如无法访问查看nginx端口是否开通防火墙可以查看一下文档</span>
+
+<span class="hljs-attr">https</span>:<span class="hljs-string">//blog.csdn.net/ysyut/article/details/113519541</span>
+
+<span class="hljs-meta">完成上述安装后，就可以在浏览器中访问http</span>:<span class="hljs-string">//本机ip:8888进入系统了，账号密码为: admin/bigtimes2020</span>
+
+<span class="hljs-attr">测试稳定后，可以将`development.state`改为false，让系统自动清理任务执行完成后的文件，或者也可以配置调度任务定时清理。</span>
+</code></pre>
+<p>2.8 修改JVM配置大小</p>
+<pre><code class="language-SHELL">vim /opt/idp/backend/bin/dolphinscheduler-daemon.sh
+
+export DOLPHINSCHEDULER_OPTS="-server -Xmx1g -Xms1g -Xss512k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"
+</code></pre>
+</div></section><footer class="footer-container"><div class="footer-body"><img src="/img/dubbo_gray.png"/><div class="cols-container"><div class="col col-12"><h3>免责声明</h3><p>免责声明的具体内容</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/demo1.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/demo2.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/dir/demo3.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/blog/index.html" target="_self">博客</a></dd><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2018 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js"></script>
+</body>
+</html>

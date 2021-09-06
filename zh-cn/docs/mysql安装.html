@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="mysql安装" />
+	<meta name="description" content="mysql安装" />
+	<!-- 网页标签标题 -->
+	<title>mysql安装</title>
+	<link rel="shortcut icon" href="/img/docsite.ico"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/dubbo_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/system/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html" target="_self">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/docs/demo1.html" target="_self">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/index.html" target="_self">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html" target="_self">社区</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/system/docs.png" class="front-img"/><span>文档</span><img src="/img/system/docs.png" class="back-img"/></div></div><section class="content-section"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>安装文档</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/idp单机安装文档-v1.0.html" target="_self">IDP安装文档</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/docker安装.html" target="_self">Docker安装</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/jdk安装.html" target="_self">jdk安装</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/mysql安装.html" target="_self">mysql安装</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/zookeeper安装.html" target="_self">Zookeeper安装</a></li></ul></li></ul></div><div class="doc-content markdown-body"><h3 id="mysql%E5%AE%89%E8%A3%85">MySQL安装 <a class="header-anchor" href="#mysql%E5%AE%89%E8%A3%85">#</a></h3>
+<h4 id="%E6%99%AE%E9%80%9A%E5%AE%89%E8%A3%85">普通安装 <a class="header-anchor" href="#%E6%99%AE%E9%80%9A%E5%AE%89%E8%A3%85">#</a></h4>
+<p><a href="https://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/">https://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/</a></p>
+<pre><code class="language-bash">shell&gt; sudo grep <span class="hljs-string">'temporary password'</span> /var/<span class="hljs-built_in">log</span>/mysqld.log
+shell&gt; mysql -uroot -p
+mysql&gt; ALTER USER <span class="hljs-string">'root'</span>@<span class="hljs-string">'localhost'</span> IDENTIFIED BY <span class="hljs-string">'Btn@20210218'</span>;
+
+</code></pre>
+<pre><code class="language-bash"> yum install -y vim 
+ rpm  -Uvh mysql57-community-release-el7-10.noarch.rpm
+ 
+ yum install mysql-community-client  <span class="hljs-comment">#安装客户端 （每台需要访问数据库的电脑上）</span>
+ yum install mysql-community-server  <span class="hljs-comment">#安装服务端 （只需安装一台mysql服务器）</span>
+</code></pre>
+<pre><code class="language-sql"><span class="hljs-comment">#数据库备份用户</span>
+<span class="hljs-keyword">GRANT</span>  <span class="hljs-keyword">SELECT</span>,<span class="hljs-keyword">LOCK</span> <span class="hljs-keyword">TABLES</span>,<span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">VIEW</span>,<span class="hljs-keyword">TRIGGER</span> <span class="hljs-keyword">ON</span> octopusscheduler.* <span class="hljs-keyword">TO</span> <span class="hljs-string">'octopus_backup'</span>@<span class="hljs-string">'localhost'</span> <span class="hljs-keyword">IDENTIFIED</span> <span class="hljs-keyword">BY</span> <span class="hljs-string">'Bk@123456'</span>;
+
+<span class="hljs-keyword">GRANT</span>  RELOAD,<span class="hljs-keyword">REPLICATION</span> <span class="hljs-keyword">CLIENT</span> <span class="hljs-keyword">ON</span> *.* <span class="hljs-keyword">TO</span> <span class="hljs-string">'octopusscheduler'</span>@<span class="hljs-string">'localhost'</span> <span class="hljs-keyword">IDENTIFIED</span> <span class="hljs-keyword">BY</span> <span class="hljs-string">'Bk@123456'</span>;
+
+<span class="hljs-keyword">GRANT</span> PROCESS <span class="hljs-keyword">ON</span> *.* <span class="hljs-keyword">to</span> <span class="hljs-string">'octopus_backup'</span>@<span class="hljs-string">'localhost'</span>;
+</code></pre>
+<h4 id="%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD">数据库备份 <a class="header-anchor" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD">#</a></h4>
+<p>配置</p>
+<pre><code class="language-bash">cat /etc/my_dump.cnf
+
+[mysqldump]
+user=octopus_backup
+password=Bk@123456
+</code></pre>
+<p>备份命令</p>
+<pre><code class="language-bash">mkdir -p /home/octopus/backup/mysql
+cat /home/octopus/backup/mysql_backup.sh
+
+<span class="hljs-meta">#!/bin/bash</span>
+attime=`date +%Y%m%d%H%M`
+backupFileName=<span class="hljs-string">"/home/octopus/backup/mysql/backup_<span class="hljs-variable">$attime</span>.sql"</span>
+backupTgzFileName=<span class="hljs-string">"/home/octopus/backup/mysql/backup_<span class="hljs-variable">$attime</span>.sql.tar.gz"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$backupFileName</span>"</span>
+mysqldump --defaults-file=<span class="hljs-string">"/etc/my_dump.cnf"</span>  --databases octopusscheduler  &gt; <span class="hljs-variable">$backupFileName</span>
+tar czvf <span class="hljs-variable">$backupTgzFileName</span>  <span class="hljs-variable">$backupFileName</span>
+rm -f <span class="hljs-variable">$backupFileName</span>
+<span class="hljs-built_in">exit</span> 0
+</code></pre>
+<p>添加到cron里</p>
+<pre><code class="language-bash"><span class="hljs-comment">#每天中午11:30执行数据库备份</span>
+crontab -l
+30 11 * * * /home/octopus/backup/mysql_backup.sh
+</code></pre>
+<p>通过光盘安装</p>
+<pre><code class="language-bash">mount /dev/cdrom  /mnt
+vi /etc/yum.repos.d/CentOS-Media.repo
+<span class="hljs-comment">## 修改后的内容 </span>
+[c7-media]
+name=CentOS-<span class="hljs-variable">$releasever</span> - Media
+baseurl=file:///mnt/
+gpgcheck=0
+enabled=1
+<span class="hljs-comment">##</span>
+
+yum --disablerepo=\* --enablerepo=c7-media  install gcc
+yum --disablerepo=\* --enablerepo=c7-media  install mariadb
+yum --disablerepo=\* --enablerepo=c7-media  install mariadb-server
+
+systemctl start mariadb
+mysql_secure_installation
+数据库用户和密码： root / ZD@123456
+
+ mysql -uroot -h localhost -p
+ 
+ 
+ 
+</code></pre>
+<h5 id="docker%E5%AE%89%E8%A3%85">Docker安装 <a class="header-anchor" href="#docker%E5%AE%89%E8%A3%85">#</a></h5>
+<pre><code class="language-bash"><span class="hljs-comment"># 通过本地的docker获取mysql镜像</span>
+docker pull mysql:5.7
+<span class="hljs-comment">#  保存成镜像包</span>
+docker save -o mysql.tar mysql:5.7
+<span class="hljs-comment"># 启动</span>
+docker run -itd --name mysql-idp  -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql
+
+
+<span class="hljs-comment"># 进入容器</span>
+docker <span class="hljs-built_in">exec</span> -it mysql bash
+
+
+<span class="hljs-comment"># 参考： https://www.runoob.com/docker/docker-install-mysql.html</span>
+</code></pre>
+<h5 id="%E5%AF%BC%E5%87%BA%E8%A1%A8%E7%BB%93%E6%9E%84%E5%92%8C%E6%95%B0%E6%8D%AE">导出表结构和数据 <a class="header-anchor" href="#%E5%AF%BC%E5%87%BA%E8%A1%A8%E7%BB%93%E6%9E%84%E5%92%8C%E6%95%B0%E6%8D%AE">#</a></h5>
+<pre><code class="language-bash"><span class="hljs-comment"># 导出整个数据库结构和数据</span>
+mysqldump -h localhost -uroot -p123456 database &gt; dump.sql 
+
+<span class="hljs-comment">#导出单个数据表结构和数据</span>
+mysqldump -h localhost -uroot -p123456  database table &gt; dump.sql
+
+<span class="hljs-comment">#导出整个数据库结构（不包含数据）</span>
+mysqldump -h localhost -uroot -p123456  -d database &gt; dump.sql
+
+<span class="hljs-comment">#导出单个数据表结构（不包含数据）</span>
+mysqldump -h localhost -uroot -p123456  -d database table &gt; dump.sql
+</code></pre>
+</div></section><footer class="footer-container"><div class="footer-body"><img src="/img/dubbo_gray.png"/><div class="cols-container"><div class="col col-12"><h3>免责声明</h3><p>免责声明的具体内容</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/dir/demo3.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/blog/index.html" target="_self">博客</a></dd><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2018 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js"></script>
+</body>
+</html>
